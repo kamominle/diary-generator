@@ -1,8 +1,7 @@
+import { NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+export const runtime = 'edge';  // ←必ず追加
 
 export async function POST(request) {
   const { style, keyword } = await request.json();
@@ -20,20 +19,21 @@ export async function POST(request) {
 - お客様への感謝や親近感が伝わるようにする
 `;
 
-  const openai = new (require('openai')).OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  // ランタイム時に環境変数を取得（Edgeランタイム対応）
+  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   try {
     const completion = await openai.chat.completions.create({
       model: "gpt-4",
       messages: [{ role: "user", content: prompt }],
       temperature: 0.7,
-      max_tokens: 500,
+      max_tokens: 300,
     });
 
     const text = completion.choices[0].message.content.trim();
 
-    return Response.json({ text });
+    return NextResponse.json({ text });
   } catch (error) {
-    return Response.json({ error: "文章生成に失敗しました。" }, { status: 500 });
+    return NextResponse.json({ error: "文章生成に失敗しました。" }, { status: 500 });
   }
 }
