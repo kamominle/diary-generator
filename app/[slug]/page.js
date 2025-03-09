@@ -21,6 +21,7 @@ export default function DiaryPage() {
   const [countdown, setCountdown] = useState(10);
   const [showPopup, setShowPopup] = useState(false);
   const [popupClosable, setPopupClosable] = useState(false);
+  const [debugPrompt, setDebugPrompt] = useState('');
   console.log('diaryData:', diary);
   useEffect(() => {
     async function fetchDiaryData() {
@@ -61,50 +62,58 @@ export default function DiaryPage() {
     fetchDiaryData();
   }, [slug]);
 
-  const generateDiary = async () => {
-    setLoading(true);
-    setShowPopup(true);
-    setPopupClosable(false);
-    setCountdown(10);
+const generateDiary = async () => {
+  setLoading(true);
+  setShowPopup(true);
+  setPopupClosable(false);
+  setCountdown(10);
 
-    const countdownInterval = setInterval(() => {
-      setCountdown(prev => (prev > 1 ? prev - 1 : 0));
-    }, 1000);
+  const countdownInterval = setInterval(() => {
+    setCountdown(prev => (prev > 1 ? prev - 1 : 0));
+  }, 1000);
 
-    setTimeout(() => {
-      clearInterval(countdownInterval);
-      setPopupClosable(true);
-    }, 10000);
+  const selectedStyle = diaryStyles.find(s => s.style_name === style);
+  const memoInputs = diaryMemos
+    .map((memo, idx) => {
+      const inputValue = document.getElementById(`memo-input-${idx}`).value;
+      return inputValue ? `${memo.prompt}：${inputValue}` : '';
+    })
+    .filter(Boolean);
 
-    const selectedStyle = diaryStyles.find(s => s.style_name === style);
-    const memoInputs = diaryMemos.map((_, idx) => {
-      const el = document.getElementById(`memo-input-${idx}`);
-      return el ? el.value : '';
+  const memoText = memoInputs.join('\n');
+
+  const prompt = `
+    スタイル：${selectedStyle?.prompt_word || ''}
+    キーワード：${keyword}
+    ルール：${diary.prompt}
+    ${memoText}`;
+
+  setDebugPrompt(prompt);  // 検証用にプロンプト表示（任意）
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt }),
     });
 
-    const prompt = `
-${diary.prompt}
-スタイル：${selectedStyle?.prompt_word || ''}
-キーワード：${keyword}
-${memoInputs.join('\n')}
-    `;
-
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
+    const data = await res.json();
+    setOutput(data.text);
+  } catch (e) {
+    setError('生成に失敗しました。');
+  } finally {
+    const countdownInterval = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(countdownInterval);
+          setPopupClosable(true);
+          setLoading(false);
+        }
+        return prev > 0 ? prev - 1 : 0;
       });
-
-      const data = await res.json();
-      setOutput(data.text);
-    } catch (e) {
-      setError('生成に失敗しました。');
-    } finally {
-      setLoading(false);
-      setShowPopup(false);
-    }
-  };
+    }, 1000);
+  }
+};
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(output);
@@ -195,7 +204,12 @@ ${memoInputs.join('\n')}
         )}
       </div>
 
-      
+        {/* <div className="mt-4 bg-gray-100 p-4 rounded-lg">
+            <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
+            <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
+        </div> */}
+
+
       {showPopup && (
         <div className="fixed inset-0 bg-white bg-opacity-70 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
