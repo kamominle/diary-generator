@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Star, AlertCircle, Send, Copy, RefreshCw } from 'react-feather';
 
 export default function Home() {
@@ -10,6 +10,9 @@ export default function Home() {
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [countdown, setCountdown] = useState(10);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupClosable, setPopupClosable] = useState(false);
 
   const clearError = () => {
     setError('');
@@ -21,6 +24,10 @@ export default function Home() {
       return;
     }
     setLoading(true);
+    setShowPopup(true);
+    setPopupClosable(false);
+    setCountdown(10);
+
     setOutput('');
     setError('');
 
@@ -38,6 +45,26 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    let timer;
+    if (showPopup) {
+      setPopupClosable(false);
+      setPopupClosable(false);
+      setTimeout(() => setPopupClosable(true), 10000);
+      setCountdown(10);
+      const countdownInterval = setInterval(() => {
+        setCountdown(prev => (prev > 1 ? prev - 1 : 0));
+      }, 1000);
+
+      setTimeout(() => {
+        clearInterval(countdownInterval);
+        setPopupClosable(true);
+      }, 10000);
+
+      return () => clearInterval(countdownInterval);
+    }
+  }, [showPopup]);
 
   const copyToClipboard = () => {
     if (navigator.clipboard) {
@@ -160,6 +187,21 @@ export default function Home() {
               >
                 <RefreshCw size={16} />
                 再生成
+              </button>
+            </div>
+          </div>
+        )}
+
+        {showPopup && (
+          <div className="fixed inset-0 bg-white bg-opacity-70 flex justify-center items-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+              <p className="mb-4">生成中です...</p>
+              <button
+                disabled={!popupClosable}
+                className={`px-4 py-2 rounded ${popupClosable ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
+                onClick={() => setShowPopup(false)}
+              >
+                閉じる {popupClosable ? '' : `(${countdown})`}
               </button>
             </div>
           </div>
