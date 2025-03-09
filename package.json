@@ -12,7 +12,8 @@
     "next": "15.2.1",
     "openai": "^4.86.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-feather": "^2.0.10"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
