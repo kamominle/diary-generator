@@ -1,5 +1,5 @@
 {
-  "name": "shame-diary-generator",
+  "name": "diary-generator",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.1",
     "next": "15.2.1",
     "openai": "^4.86.2",
     "react": "^19.0.0",
