@@ -203,11 +203,11 @@ const generateDiary = async () => {
           </div>
         )}
       </div>
-
+{/* 
         <div className="mt-4 bg-gray-100 p-4 rounded-lg">
             <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
             <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
-        </div>
+        </div> */}
 
 
       {showPopup && (
