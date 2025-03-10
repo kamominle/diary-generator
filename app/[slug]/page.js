@@ -129,7 +129,7 @@ const generateDiary = async () => {
       <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
         <div className="flex items-center gap-2 mb-6">
           <Star className="text-pink-500" size={24} />
-          <h1 className="text-2xl font-bold text-gray-800">{diary.name}生成ツール</h1>
+          <h1 className="text-2xl font-bold text-gray-800">{diary.name} 代筆くん</h1>
         </div>
 
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
@@ -173,7 +173,7 @@ const generateDiary = async () => {
         </div>
 
         <button onClick={generateDiary} className="mt-4 px-4 py-2 bg-pink-500 text-white rounded-lg">
-          日記を生成
+          代筆する
         </button>
 
         {output && (
@@ -194,7 +194,7 @@ const generateDiary = async () => {
               <button
                 onClick={generateDiary}
                 className="flex items-center gap-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-all"
-                aria-label="日記を再生成"
+                aria-label="代筆を再生成"
               >
                 <RefreshCw size={16} />
                 再生成
@@ -204,16 +204,18 @@ const generateDiary = async () => {
         )}
       </div>
 
-        {/* <div className="mt-4 bg-gray-100 p-4 rounded-lg">
+        <div className="mt-4 bg-gray-100 p-4 rounded-lg">
             <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
             <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
-        </div> */}
+        </div>
 
 
       {showPopup && (
         <div className="fixed inset-0 bg-white bg-opacity-70 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <p className="mb-4 text-gray-700">生成中です...</p>
+            <p className="mb-4 text-gray-700">
+              {countdown === 0 ? '生成完了！' : `生成中です...（残り${countdown}秒）`}
+            </p>
             <button
               disabled={!popupClosable}
               className={`px-4 py-2 rounded ${popupClosable ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
