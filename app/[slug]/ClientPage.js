@@ -116,22 +116,33 @@ const generateDiary = async () => {
     });
 
     const data = await res.json();
+    console.log('API Response:', data);
+    
     setOutput(data.text);
-
-    // ログをDBに保存
-    await supabase
-      .from('diary_logs')
-      .insert({
-        diary_id: diary.id,
-        input_prompt: prompt,
-        output_text: data.text,
-        style_name: selectedStyle?.style_name,
-        keyword: keyword,
-        memo_inputs: memoInputs
-      });
+    
+    if (data.moderation_flagged) {
+      // モデレーションエラーの場合、即時表示
+      setShowPopup(false);
+      setShowOutput(true);
+      clearInterval(countdownInterval);
+    } else {
+      // モデレーションエラーがない場合のみDBに保存
+      await supabase
+        .from('diary_logs')
+        .insert({
+          diary_id: diary.id,
+          input_prompt: prompt,
+          output_text: data.text,
+          style_name: selectedStyle?.style_name,
+          keyword: keyword,
+          memo_inputs: memoInputs
+        });
+    }
 
   } catch (e) {
+    console.error('生成エラー:', e);
     setError('生成に失敗しました。');
+    setShowPopup(false);
   } finally {
     setLoading(false);
   }

@@ -9,12 +9,24 @@ export async function POST(request) {
   const adjustedPrompt = `
 ${prompt}
 
-【重要】上記の内容を「日本語で300文字以内」でまとめてください。
+【追加条件】安全で適切な内容を300文字以内でまとめてください。
 `;
 
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
   try {
+    const moderationResponse = await openai.moderations.create({
+      model: "omni-moderation-latest",
+      input: prompt,
+    });
+
+    if (moderationResponse.results[0].flagged) {
+      return NextResponse.json({ 
+        moderation_flagged: true,
+        text: "入力内容に公序良俗に反するキーワードを検知しました。キーワードを修正してください。"
+      });
+    }
+
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       // model: "gpt-3.5-turbo",
@@ -26,8 +38,8 @@ ${prompt}
 
     const text = completion.choices[0].message.content.trim();
 
-    return NextResponse.json({ text });
+    return NextResponse.json({ text, moderation_flagged: false });
   } catch (error) {
     return NextResponse.json({ error: "文章生成に失敗しました。" }, { status: 500 });
   }
-} 
+}
