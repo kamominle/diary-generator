@@ -4,9 +4,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-feather';
+import DOMPurify from 'dompurify';
 
 export default function ClientPage() {
-  // ...export default function DiaryPage() {
   const params = useParams();
   const slug = params.slug;
 
@@ -25,6 +25,8 @@ export default function ClientPage() {
   const [debugPrompt, setDebugPrompt] = useState('');
   const [showOutput, setShowOutput] = useState(false);
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [memoErrors, setMemoErrors] = useState({});
   console.log('diaryData:', diary);
   useEffect(() => {
     async function fetchDiaryData() {
@@ -66,11 +68,24 @@ export default function ClientPage() {
   }, [slug]);
 
 const generateDiary = async () => {
+  setFormError('');
+
+  const memoInputs = diaryMemos.map((memo, idx) => {
+    const element = document.getElementById(`memo-input-${idx}`);
+    const value = element ? element.value : '';
+    if (!value.trim()) return null;
+    return { input_title: memo.input_title, prompt: memo.prompt, value };
+  }).filter(Boolean);
+
+  const hasErrors = Object.values(memoErrors).some(error => !!error);
+  if (hasErrors) return;
+
+  setError(''); // エラーをクリア
   setShowOutput(false);
   setLoading(true);
   setShowPopup(true);
   setPopupClosable(false);
-  setCountdown(10);
+  setCountdown(5);
 
   const countdownInterval = setInterval(() => {
     setCountdown(prev => {
@@ -84,18 +99,6 @@ const generateDiary = async () => {
   }, 1000);
 
   const selectedStyle = diaryStyles.find(s => s.style_name === style);
-  const memoInputs = diaryMemos
-    .map((memo, idx) => {
-      const element = document.getElementById(`memo-input-${idx}`);
-      const inputValue = element ? element.value : '';
-      return {
-        title: memo.input_title,
-        prompt: memo.prompt,
-        value: inputValue
-      };
-    })
-    .filter(memo => memo.value);
-
   const memoText = memoInputs
     .map(memo => `${memo.prompt}：${memo.value}`)
     .join('\n');
@@ -104,8 +107,10 @@ const generateDiary = async () => {
     スタイル：${selectedStyle?.prompt_word || ''}
     キーワード：${keyword}
     ルール：${diary.prompt}
-    ${memoText}`;
+    ${memoText}
 
+${diary.word_count || 300}文字以内（日本語換算）でまとめてください。
+`;
   setDebugPrompt(prompt);
 
   try {
@@ -118,15 +123,13 @@ const generateDiary = async () => {
     const data = await res.json();
     console.log('API Response:', data);
     
-    setOutput(data.text);
+    setOutput(DOMPurify.sanitize(data.text));
     
     if (data.moderation_flagged) {
-      // モデレーションエラーの場合、即時表示
       setShowPopup(false);
       setShowOutput(true);
       clearInterval(countdownInterval);
     } else {
-      // モデレーションエラーがない場合のみDBに保存
       await supabase
         .from('diary_logs')
         .insert({
@@ -207,13 +210,28 @@ const generateDiary = async () => {
           <label className="block mt-3 mb-1 text-sm font-medium text-gray-700">キーワード</label>
           <input
             placeholder={diary.initial_keyword || 'キーワードを入力'}
-            onChange={(e) => setKeyword(e.target.value)}
-            className="w-full p-3 border rounded-lg text-gray-600"
+            onChange={(e) => {
+              setKeyword(e.target.value);
+              if (e.target.value.length > 500) {
+                setFormError('キーワードは500文字以内で入力してください');
+              } else {
+                setFormError('');
+              }
+            }}
+            className={`w-full p-3 border rounded-lg text-gray-600 ${
+              formError ? 'border-red-500' : ''
+            }`}
           />
+          <p className="text-sm text-gray-600 m-2">
+            書きたい内容をかんたんに入力してください。
+          </p>
+          {formError && (
+            <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded-md">
+              <p>{formError}</p>
+            </div>
+          )}
         </div>
-              <p className="text-sm text-gray-600 m-2">
-                書きたい内容をかんたんに入力してください。
-              </p>
+
         <div className="mt-6">
           <button
             onClick={() => setIsAccordionOpen(!isAccordionOpen)}
@@ -231,18 +249,24 @@ const generateDiary = async () => {
           </button>
 
           {isAccordionOpen && (
-            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+            <div className="mt-4 p-4 bg-gray-50 rounded-lg text-gray-700">
               <div className="space-y-4">
                 {diaryMemos.map((memo, idx) => (
-                  <div key={memo.id}>
-                    <label className="block mb-1 text-sm font-medium text-gray-700">
-                      {memo.input_title}
-                    </label>
+                  <div key={memo.id} className="mb-4">
+                    <label className="block mb-1">{memo.input_title}</label>
                     <input
                       id={`memo-input-${idx}`}
                       placeholder={memo.placeholder}
-                      className="w-full p-3 border rounded-lg text-gray-700 bg-white"
+                      className={`w-full p-3 border rounded-lg ${memoErrors[idx] ? 'border-red-500' : 'border-gray-300'}`}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setMemoErrors(prev => ({
+                          ...prev,
+                          [idx]: value.length > 100 ? '入力が長すぎます（100文字以内）' : ''
+                        }));
+                      }}
                     />
+                    {memoErrors[idx] && <p className="text-red-500 text-sm mt-1">{memoErrors[idx]}</p>}
                   </div>
                 ))}
               </div>
@@ -252,7 +276,8 @@ const generateDiary = async () => {
 
         <button 
           onClick={generateDiary} 
-          className="w-full mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="w-full mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+          disabled={!!formError}
         >
           代筆する
         </button>
@@ -289,8 +314,8 @@ const generateDiary = async () => {
           )}
         </div>
       </div>
-{/* 
-        <div className="mt-4 bg-gray-100 p-4 rounded-lg">
+
+        {/* <div className="mt-4 bg-gray-100 p-4 rounded-lg">
             <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
             <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
         </div> */}
@@ -317,4 +342,4 @@ const generateDiary = async () => {
       )}
     </div>
   );
-} 
+}
