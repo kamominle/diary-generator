@@ -313,14 +313,14 @@ ${diary.word_count || 300}文字以内（日本語換算）でまとめてくだ
             </div>
           )}
         </div>
-      </div>
-
+        <div className="w-full text-center mt-4 clear-both">
+          <a href="/" className="text-blue-500 underline">トップページに戻る</a>
+        </div>
         {/* <div className="mt-4 bg-gray-100 p-4 rounded-lg">
-            <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
-            <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
-        </div> */}
-
-
+    <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
+    <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
+</div> */}
+      </div>
       {showPopup && (
         <div className="fixed inset-0 bg-white/80 bg-opacity-70 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
