@@ -19,7 +19,7 @@ export default function ClientPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(5);
   const [showPopup, setShowPopup] = useState(false);
   const [popupClosable, setPopupClosable] = useState(false);
   const [debugPrompt, setDebugPrompt] = useState('');
@@ -155,7 +155,7 @@ const generateDiary = async () => {
   };
 
   if (error) return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 p-4 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 text-red-500">
         {error}
       </div>
@@ -163,20 +163,20 @@ const generateDiary = async () => {
   );
 
   if (!diary) return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 p-4 flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex flex-col items-center justify-center">
       <div className="animate-spin mb-4">
-        <Loader size={32} className="text-pink-500" />
+        <Loader size={32} className="text-blue-500" />
       </div>
       <p className="text-gray-600 animate-pulse">読み込み中...</p>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-blue-50 p-4 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex items-center justify-center">
       <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
-            <Star className="text-pink-500" size={24} />
+            <Star className="text-blue-500" size={24} />
             <h1 className="text-2xl font-bold text-gray-800">{diary.name} 代筆くん</h1>
           </div>
           {diary.description && (
@@ -188,13 +188,13 @@ const generateDiary = async () => {
 
         <div className="bg-gray-50 p-4 rounded-lg mb-6">
           <p className="text-sm text-gray-600 mb-3">スタイル選択：</p>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-1 md:gap-3">
             {diaryStyles.map(styleOption => (
               <button
                 key={styleOption.id}
                 onClick={() => setStyle(styleOption.style_name)}
-                className={`px-4 py-2 rounded-full text-sm transition-all ${
-                  style === styleOption.style_name ? 'bg-pink-500 text-white' : 'bg-gray-400'
+                className={`px-4 py-2 rounded-full text-sm transition-all mb-1 ${
+                  style === styleOption.style_name ? 'bg-blue-500 text-white' : 'bg-gray-400'
                 }`}
               >
                 {styleOption.style_name}
@@ -206,14 +206,13 @@ const generateDiary = async () => {
         <div className="mt-4">
           <label className="block mt-3 mb-1 text-sm font-medium text-gray-700">キーワード</label>
           <input
-            value={keyword}
             placeholder={diary.initial_keyword || 'キーワードを入力'}
             onChange={(e) => setKeyword(e.target.value)}
             className="w-full p-3 border rounded-lg text-gray-600"
           />
         </div>
               <p className="text-sm text-gray-600 m-2">
-                書きたい内容を箇条書きでもいいので入力してください。
+                書きたい内容をかんたんに入力してください。
               </p>
         <div className="mt-6">
           <button
@@ -253,7 +252,7 @@ const generateDiary = async () => {
 
         <button 
           onClick={generateDiary} 
-          className="w-full mt-6 px-4 py-2 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+          className="w-full mt-6 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
         >
           代筆する
         </button>
