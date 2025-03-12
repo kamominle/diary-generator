@@ -189,66 +189,70 @@ ${diary.word_count || 300}文字以内（日本語換算）でまとめてくだ
           )}
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-lg mb-6">
-          <p className="text-sm text-gray-600 mb-3">スタイル選択：</p>
-          <div className="flex flex-wrap gap-1 md:gap-3">
-            {diaryStyles.map(styleOption => (
-              <button
-                key={styleOption.id}
-                onClick={() => setStyle(styleOption.style_name)}
-                className={`px-4 py-2 rounded-full text-sm transition-all mb-1 ${
-                  style === styleOption.style_name ? 'bg-blue-500 text-white' : 'bg-gray-400'
-                }`}
-              >
-                {styleOption.style_name}
-              </button>
-            ))}
-          </div>
-        </div>
+{diaryStyles.length > 0 && (
+  <div className="bg-gray-50 p-4 rounded-lg mb-6">
+    <p className="text-sm text-gray-600 mb-3">スタイル選択：</p>
+    <div className="flex flex-wrap gap-1 md:gap-3">
+      {diaryStyles.map(styleOption => (
+        <button
+          key={styleOption.id}
+          onClick={() => setStyle(styleOption.style_name)}
+          className={`px-4 py-2 rounded-full text-sm transition-all ${
+            style === styleOption.style_name ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-600'
+          }`}
+        >
+          {styleOption.style_name}
+        </button>
+      ))}
+    </div>
+  </div>
+)}
 
-        <div className="mt-4">
-          <label className="block mt-3 mb-1 text-sm font-medium text-gray-700">キーワード</label>
-          <input
-            placeholder={diary.initial_keyword || 'キーワードを入力'}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-              if (e.target.value.length > 500) {
-                setFormError('キーワードは500文字以内で入力してください');
-              } else {
-                setFormError('');
-              }
-            }}
-            className={`w-full p-3 border rounded-lg text-gray-600 ${
-              formError ? 'border-red-500' : ''
-            }`}
-          />
-          <p className="text-sm text-gray-600 m-2">
-            書きたい内容をかんたんに入力してください。
-          </p>
-          {formError && (
-            <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded-md">
-              <p>{formError}</p>
-            </div>
-          )}
-        </div>
+  <div className="mt-6">
+    <label className="block mt-3 mb-1 text-sm font-medium text-gray-700">キーワード</label>
+    <input
+      placeholder={diary.initial_keyword || 'キーワードを入力'}
+      onChange={(e) => {
+        setKeyword(e.target.value);
+        if (e.target.value.length > 500) {
+          setFormError('キーワードは500文字以内で入力してください');
+        } else {
+          setFormError('');
+        }
+      }}
+      className={`w-full p-3 border rounded-lg text-gray-600 ${
+        formError ? 'border-red-500' : ''
+      }`}
+    />
+    <p className="text-sm text-gray-600 m-2">
+      書きたい内容をかんたんに入力してください。
+    </p>
+    {formError && (
+      <div className="mt-2 text-sm text-red-600 bg-red-50 p-2 rounded-md">
+        <p>{formError}</p>
+      </div>
+    )}
+  </div>
 
         <div className="mt-6">
-          <button
-            onClick={() => setIsAccordionOpen(!isAccordionOpen)}
-            className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            <div className="flex items-center gap-2">
-              <h2 className="text-sm font-medium text-gray-700">こだわり条件</h2>
-              <span className="text-xs text-gray-500">（任意）</span>
-            </div>
-            {isAccordionOpen ? (
-              <ChevronUp size={20} className="text-gray-500" />
-            ) : (
-              <ChevronDown size={20} className="text-gray-500" />
-            )}
-          </button>
+          {diaryMemos.length > 0 && (
+            <button
+              onClick={() => setIsAccordionOpen(!isAccordionOpen)}
+              className="w-full flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <h2 className="text-sm font-medium text-gray-700">こだわり条件</h2>
+                <span className="text-xs text-gray-500">（任意）</span>
+              </div>
+              {isAccordionOpen ? (
+                <ChevronUp size={20} className="text-gray-500" />
+              ) : (
+                <ChevronDown size={20} className="text-gray-500" />
+              )}
+            </button>
+          )}
 
-          {isAccordionOpen && (
+          {isAccordionOpen && diaryMemos.length > 0 && (
             <div className="mt-4 p-4 bg-gray-50 rounded-lg text-gray-700">
               <div className="space-y-4">
                 {diaryMemos.map((memo, idx) => (
@@ -325,8 +329,8 @@ ${diary.word_count || 300}文字以内（日本語換算）でまとめてくだ
   className="column mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-gray-700"
   dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(diary.column) }}
 />
-
 )}
+
       </div>
 
       {showPopup && (
