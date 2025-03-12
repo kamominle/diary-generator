@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://diary-generator.vercel.app
+
+# Sitemaps
+Sitemap: https://diary-generator.vercel.app/sitemap.xml

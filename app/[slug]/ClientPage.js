@@ -320,10 +320,10 @@ ${memoText}
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
         </div>
-        <div className="mt-4 bg-gray-100 p-4 rounded-lg">
-    {/* <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
-    <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre> */}
-</div>
+        {/* <div className="mt-4 bg-gray-100 p-4 rounded-lg">
+    <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
+    <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
+</div> */}
       {diary.column && (
 <div
   className="column mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-gray-700"
