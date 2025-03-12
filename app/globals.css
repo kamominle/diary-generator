@@ -24,3 +24,83 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.column {
+  color: #333;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.column h1, .column h2, .column h3 {
+  color: #222;
+  font-weight: bold;
+  margin: 1.5rem 0 1rem;
+}
+
+.column h1 {
+  font-size: 1.8rem;
+}
+
+.column h2 {
+  font-size: 1.6rem;
+}
+
+.column h3 {
+  font-size: 1.4rem;
+}
+
+.column p {
+  margin-bottom: 1rem;
+}
+
+.column ul, .column ol {
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+.column a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.column p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.column img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.column blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 1rem;
+  color: #666;
+  margin: 1rem 0;
+  font-style: italic;
+}
+
+.column ul,
+.column ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.column ul {
+  list-style-type: disc;
+}
+
+.column ol {
+  list-style-type: decimal;
+}
+
+.column a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.column a:hover {
+  text-decoration: none;
+}

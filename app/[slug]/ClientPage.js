@@ -320,7 +320,15 @@ ${diary.word_count || 300}文字以内（日本語換算）でまとめてくだ
     <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>
     <pre className="text-gray-700 whitespace-pre-wrap">{debugPrompt}</pre>
 </div> */}
+      {diary.column && (
+<div
+  className="column mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-gray-700"
+  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(diary.column) }}
+/>
+
+)}
       </div>
+
       {showPopup && (
         <div className="fixed inset-0 bg-white/80 bg-opacity-70 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
