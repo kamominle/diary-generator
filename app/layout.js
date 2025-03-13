@@ -43,6 +43,12 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "http://schema.org",
+          "@type": "WebSite",
+          "name": "AI代筆くん",
+          "url": "https://diary-generator.vercel.app/"
+        })}} />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
