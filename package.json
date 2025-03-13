@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
-    "postbuild": "next-sitemap -c sitemap.config.js",
+    "build": "next build && next-sitemap -c sitemap.config.js",
     "start": "next start",
     "lint": "next lint"
   },
