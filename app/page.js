@@ -34,10 +34,6 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex items-center justify-center">
       <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6 min-h-[400px]">
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <Star className="text-blue-500" size={24} />
-            <h1 className="text-2xl font-bold text-gray-800">代筆くん</h1>
-          </div>
           <p className="text-sm text-gray-600 m-4">
             なんと言っていいか、書いていいかわからない。そんな時、あなたの気持ちを代筆します。
           </p>

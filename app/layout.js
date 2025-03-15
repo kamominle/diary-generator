@@ -1,3 +1,5 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -11,36 +13,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: {
-    template: '%s | 代筆くん',
-    default: '代筆くん - AIが日記を代筆',
-  },
-  description: 'AIが日記を代筆します。あなたの思い出を素敵な文章に。',
-  openGraph: {
-    title: {
-      template: '%s | 代筆くん',
-      default: '代筆くん - AIが日記を代筆',
-    },
-    description: 'AIが日記を代筆します。あなたの思い出を素敵な文章に。',
-    type: 'website',
-    locale: 'ja_JP',
-  },
-};
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <script
-          async
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id=GTM-5NHDQB8L'+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer');
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','GTM-5NHDQB8L');
             `,
           }}
         />
@@ -51,14 +35,18 @@ export default function RootLayout({ children }) {
           "url": "https://diary-generator.vercel.app/"
         })}} />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
         <noscript>
-          <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NHDQB8L"
-            height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-5NHDQB8L"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
         </noscript>
-        {children}
+        <Header />
+          {children}
+        <Footer />
       </body>
     </html>
   );
