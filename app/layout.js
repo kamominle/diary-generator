@@ -33,6 +33,7 @@ export default function RootLayout({ children }) {
     <html lang="ja">
       <head>
         <script
+          async
           dangerouslySetInnerHTML={{
             __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
