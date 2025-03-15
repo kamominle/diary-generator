@@ -8,6 +8,8 @@ import { Star } from 'react-feather';
 export default function Home() {
   const [diaries, setDiaries] = useState([]);
   const [error, setError] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     async function fetchDiaries() {
@@ -34,25 +36,40 @@ export default function Home() {
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
             <Star className="text-blue-500" size={24} />
-          <h1 className="text-2xl font-bold text-gray-800">代筆くん</h1>
-        </div>
-        <p className="text-sm text-gray-600 m-4">
+            <h1 className="text-2xl font-bold text-gray-800">代筆くん</h1>
+          </div>
+          <p className="text-sm text-gray-600 m-4">
             なんと言っていいか、書いていいかわからない。そんな時、あなたの気持ちを代筆します。
-        </p>
-        <div className="grid gap-4">
-          {diaries.map(diary => (
-            <div key={diary.id}>
-              <Link
-                href={`/${diary.slug}`}
-                className="block p-4 bg-white rounded-lg shadow hover:bg-blue-50 transition text-gray-800"
-              >
-                {diary.name} 代筆くん
-              </Link>
+          </p>
+          <div className="grid gap-4">
+            {diaries.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(diary => (
+              <div key={diary.id}>
+                <Link href={`/${diary.slug}`} className="block border rounded-lg p-4 shadow hover:shadow-md transition">
+                  <h2 className="text-xl font-bold text-gray-800">{diary.name}</h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    {diary.description.length > 33 ? `${diary.description.slice(0, 33)}...` : diary.description}
+                  </p>
+                </Link>
+              </div>
+            ))}
+          </div>
+          {diaries.length > itemsPerPage && (
+            <div className="mt-4 flex justify-center gap-2">
+              {Array.from({ length: Math.ceil(diaries.length / itemsPerPage) }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={`px-3 py-1 bg-gray-200 rounded ${
+                    currentPage === index + 1 ? 'bg-gray-400 text-white' : 'text-gray-700'
+                  }`}
+                >
+                  {index + 1}
+                </button>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-        </div>
-        </div>
-        </div>
+      </div>
+    </div>
   );
 }
