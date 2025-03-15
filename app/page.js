@@ -32,7 +32,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex items-center justify-center">
-      <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6 min-h-[400px]">
+      <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6 min-h-[600px]">
         <div className="mb-6">
           <p className="text-sm text-gray-600 m-4">
             なんと言っていいか、書いていいかわからない。そんな時、あなたの気持ちを代筆します。
@@ -42,7 +42,7 @@ export default function Home() {
               <div key={diary.id}>
                 <Link href={`/${diary.slug}`} className="block border rounded-lg p-4 shadow hover:shadow-md transition">
                   <h2 className="text-xl font-bold text-gray-800">{diary.name}</h2>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-gray-500 text-sm leading-relaxed">
                     {diary.description.length > 33 ? `${diary.description.slice(0, 33)}...` : diary.description}
                   </p>
                 </Link>
