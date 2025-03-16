@@ -189,6 +189,32 @@ ${memoText}
           )}
         </div>
 
+        <div className="flex flex-wrap gap-2 mb-4">
+          <button
+            onClick={() => navigator.clipboard.writeText(`【${diary.name}】 ${diary.description} ${window.location.href}`)}
+            className="flex items-center gap-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all"
+            >
+            <Copy size={16} />
+            URLをコピー
+          </button>
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${diary.name}】 ${diary.description}`)}&url=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-lg transition-all"
+          >
+            Xで共有
+          </a>
+          <a
+            href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`【${diary.name}】 ${diary.description}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all"
+          >
+            LINEで共有
+          </a>
+        </div>
+
 {diaryStyles.length > 0 && (
   <div className="bg-gray-50 p-4 rounded-lg mb-6">
     <p className="text-sm text-gray-600 mb-3">スタイル選択：</p>
@@ -297,7 +323,8 @@ ${memoText}
           </div>
 
           {output && showOutput && (
-            <div className="mt-4 flex gap-3">
+        <div className="mt-6">
+            <div className="flex flex-wrap flex gap-2">
               <button
                 onClick={copyToClipboard}
                 className="flex items-center gap-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all"
@@ -306,6 +333,22 @@ ${memoText}
                 <Copy size={16} />
                 {copied ? 'コピーしました！' : 'コピー'}
               </button>
+              <a
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(output)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-lg transition-all"
+              >
+                Xに投稿
+              </a>
+              <a
+                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(output)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
+              >
+                LINEで共有
+              </a>
               <button
                 onClick={generateDiary}
                 className="flex items-center gap-1 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-all"
@@ -314,9 +357,11 @@ ${memoText}
                 <RefreshCw size={16} />
                 再生成
               </button>
-            </div>
-          )}
+              </div>
+              </div>
+            )}
         </div>
+
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
         </div>
