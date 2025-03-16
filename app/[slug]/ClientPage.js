@@ -177,9 +177,33 @@ ${memoText}
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex items-center justify-center">
       <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
+      <div className="flex flex-wrap gap-2 mb-4">
+          <button
+            onClick={() => navigator.clipboard.writeText(`${window.location.href}`)}
+            className="text-[10px] flex items-center gap-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all"
+            >
+            <Copy size={16} />
+          </button>
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${diary.name}】 ${diary.description}`)}&url=${encodeURIComponent(window.location.href)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-lg transition-all"
+          >
+            X
+          </a>
+          <a
+            href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`【${diary.name}】 ${diary.description}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all"
+          >
+            LINE
+          </a>
+        </div>
+
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-2">
-            <Star className="text-blue-500" size={24} />
             <h1 className="text-2xl font-bold text-gray-800">{diary.name} 代筆くん</h1>
           </div>
           {diary.description && (
@@ -187,32 +211,6 @@ ${memoText}
               {diary.description}
             </p>
           )}
-        </div>
-
-        <div className="flex flex-wrap gap-2 mb-4">
-          <button
-            onClick={() => navigator.clipboard.writeText(`【${diary.name}】 ${diary.description} ${window.location.href}`)}
-            className="flex items-center gap-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all"
-            >
-            <Copy size={16} />
-            URLをコピー
-          </button>
-          <a
-            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`【${diary.name}】 ${diary.description}`)}&url=${encodeURIComponent(window.location.href)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-lg transition-all"
-          >
-            Xで共有
-          </a>
-          <a
-            href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`【${diary.name}】 ${diary.description}`)}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all"
-          >
-            LINEで共有
-          </a>
         </div>
 
 {diaryStyles.length > 0 && (
