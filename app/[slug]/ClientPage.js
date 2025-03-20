@@ -419,8 +419,9 @@ ${memoText}
         <div className="fixed inset-0 bg-white/80 bg-opacity-70 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
             <p className="mb-4 text-gray-700">
-              {countdown === 0 ? '生成完了！' : `生成中です...（残り${countdown}秒）`}
+              {countdown === 0 ? '代筆完了！' : `代筆中です...（残り${countdown}秒）`}
             </p>
+            <img src="/writing.png" alt="代筆中" className="mx-auto my-4" style={{ width: '200px' }} />
             <button
               disabled={!popupClosable}
               className={`px-4 py-2 rounded ${popupClosable ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
