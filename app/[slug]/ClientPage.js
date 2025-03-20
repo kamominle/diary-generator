@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-feather';
 import DOMPurify from 'dompurify';
+import { ThumbsUp, ThumbsDown } from 'react-feather';
 
 export default function ClientPage() {
   const params = useParams();
@@ -27,6 +28,7 @@ export default function ClientPage() {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [formError, setFormError] = useState('');
   const [memoErrors, setMemoErrors] = useState({});
+  const [feedbackSent, setFeedbackSent] = useState(false);
   console.log('diaryData:', diary);
   useEffect(() => {
     async function fetchDiaryData() {
@@ -156,6 +158,20 @@ ${memoText}
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+  
+  async function sendFeedback(type) {
+    if (feedbackSent) return;
+    const { error } = await supabase.from('diary_feedback').insert({
+      diary_id: diary.id,
+      feedback_type: type,
+    });
+  
+    if (!error) {
+      setFeedbackSent(true);
+    } else {
+      console.error('Feedback Error:', error.message, error.details);
+    }
+  }
 
   if (error) return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex items-center justify-center">
@@ -355,6 +371,29 @@ ${memoText}
                 <RefreshCw size={16} />
                 再生成
               </button>
+              <div className="mt-4 text-gray-700">
+                <p>代筆は役に立ちましたか？</p>
+                {!feedbackSent ? (
+                  <div className="flex gap-2 mt-2">
+                    <button
+                      onClick={() => sendFeedback('good')}
+                      className="px-3 py-2 bg-green-100 hover:bg-green-200 rounded-lg flex items-center gap-1"
+                      disabled={feedbackSent}
+                    >
+                      <ThumbsUp size={16} /> GOOD
+                    </button>
+                    <button
+                      onClick={() => sendFeedback('bad')}
+                      className="px-3 py-2 bg-red-100 hover:bg-red-200 rounded-lg flex items-center gap-1"
+                      disabled={feedbackSent}
+                    >
+                      <ThumbsDown size={16} /> BAD
+                    </button>
+                  </div>
+                ) : (
+                  <p className="mt-2 text-sm text-gray-500">ご協力ありがとうございます♪</p>
+                )}
+              </div>
               </div>
               </div>
             )}
