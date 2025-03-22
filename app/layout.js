@@ -9,13 +9,9 @@ const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], variable: "--font-noto-san
 
 export default function RootLayout({ children }) {
   return (
-<html lang="ja" className={`${robotoMono.variable} ${notoSansJP.className}`}>
+    <html lang="ja" className={`${robotoMono.variable} ${notoSansJP.className}`}>
       <head>
         <title>代筆くん 自動手記ひつじサービス</title>
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtm.js?id=GTM-5NHDQB8L"
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -29,6 +25,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-5NHDQB8L"
@@ -37,6 +34,18 @@ export default function RootLayout({ children }) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        
+        {/* Google Tag Manager */}
+        <Script id="google-tag-manager" strategy="beforeInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-5NHDQB8L');
+          `}
+        </Script>
+        
         <Header />
         {children}
         <Footer />
