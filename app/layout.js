@@ -1,27 +1,15 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Geist, Geist_Mono, Noto_Sans_JP } from "next/font/google";
+import { Noto_Sans_JP, Roboto_Mono } from "next/font/google";
 import Script from 'next/script';
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const notoSansJP = Noto_Sans_JP({
-  subsets: ["latin"],
-  weight: ["400"],
-});
+const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: "--font-roboto-mono" });
+const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], variable: "--font-noto-sans-jp" });
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ja" className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.className}`}>
+<html lang="ja" className={`${robotoMono.variable} ${notoSansJP.className}`}>
       <head>
         <title>代筆くん 自動手記ひつじサービス</title>
         <Script
