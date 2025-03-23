@@ -7,11 +7,14 @@ import "./globals.css";
 const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: "--font-roboto-mono" });
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], variable: "--font-noto-sans-jp" });
 
+export const metadata = {
+  title: '代筆くん 自動手記ひつじサービス',
+};
+
 export default function RootLayout({ children }) {
   return (
     <html lang="ja" className={`${robotoMono.variable} ${notoSansJP.className}`}>
       <head>
-        <title>代筆くん 自動手記ひつじサービス</title>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
