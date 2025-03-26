@@ -6,7 +6,7 @@ import { supabase } from '@/utils/supabase';
 import { Star } from 'react-feather';
 
 export default function Home() {
-  const [diaries, setDiaries] = useState([]);
+  const [diaries, setDiaries] = useState(null);
   const [error, setError] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -38,7 +38,7 @@ export default function Home() {
             なんと言っていいか、書いていいかわからない。そんな時、あなたの気持ちを代筆します。
           </p>
           <div className="grid gap-4">
-            {diaries.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(diary => (
+            {diaries && diaries.filter(diary => diary.initial_display).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(diary => diary && (
               <div key={diary.id}>
                 <Link href={`/${diary.slug}`} className="block border rounded-lg p-4 shadow hover:shadow-md transition">
                   <h2 className="text-xl font-bold text-gray-800">{diary.name}</h2>
@@ -49,7 +49,7 @@ export default function Home() {
               </div>
             ))}
           </div>
-          {diaries.length > itemsPerPage && (
+          {diaries && diaries.length > itemsPerPage && (
             <div className="mt-4 flex justify-center gap-2">
               {Array.from({ length: Math.ceil(diaries.length / itemsPerPage) }, (_, index) => (
                 <button
