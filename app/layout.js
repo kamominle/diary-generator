@@ -7,6 +7,14 @@ import "./globals.css";
 const robotoMono = Roboto_Mono({ subsets: ["latin"], variable: "--font-roboto-mono" });
 const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], variable: "--font-noto-sans-jp" });
 
+// JSON-LDデータを変数として定義
+const jsonLd = {
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "name": "AI代筆くん",
+  "url": "https://diary-generator.vercel.app/"
+};
+
 export const metadata = {
   title: '代筆くん 自動手記ひつじサービス',
 };
@@ -15,16 +23,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ja" className={`${robotoMono.variable} ${notoSansJP.className}`}>
       <head>
-        <script
+        {/* next/scriptコンポーネントを使用してJSON-LDを挿入 */}
+        <Script
+          id="json-ld"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "http://schema.org",
-              "@type": "WebSite",
-              "name": "AI代筆くん",
-              "url": "https://diary-generator.vercel.app/"
-            }),
-          }}
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body>

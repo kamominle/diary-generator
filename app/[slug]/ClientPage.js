@@ -6,6 +6,7 @@ import { supabase } from '@/utils/supabase';
 import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-feather';
 import DOMPurify from 'dompurify';
 import { ThumbsUp, ThumbsDown } from 'react-feather';
+import ShameDiaryPage from './ShameDiaryPage';
 
 export default function ClientPage() {
   const params = useParams();
@@ -180,6 +181,11 @@ ${memoText}
       </div>
     </div>
   );
+
+  // 関数内に追加
+  if (slug === 'shame-diary') {
+    return <ShameDiaryPage />;
+  }
 
   if (!diary) return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex flex-col items-center justify-center">
