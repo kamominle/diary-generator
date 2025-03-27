@@ -343,9 +343,9 @@ ${customer ? `お客様：${customer}` : ''}
       <div className="max-w-xl mx-auto">
         {/* Title and header */}
         <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">写メ日記代筆くん</h1>
+          <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">写メ日記 代行・代筆くん</h1>
           <p className="text-center text-gray-600 mb-2">
-            風俗の写メ日記を簡単に作成できるツールです
+            写メ日記の作成をお手伝いするツールです
           </p>
         </div>
         
