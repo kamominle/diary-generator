@@ -646,7 +646,7 @@ ${customer ? `お客様：${customer}` : ''}
                 >Xに投稿</a>
                 <a 
                   className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                  href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(output)}`}
+                  href={`https://line.me/R/msg/text/?${encodeURIComponent(output)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >LINEで共有</a>

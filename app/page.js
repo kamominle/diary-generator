@@ -35,7 +35,7 @@ export default function Home() {
       <div className="w-full max-w-xl bg-white rounded-xl shadow-lg p-6 min-h-[600px]">
         <div className="mb-6">
           <p className="text-sm text-gray-600 m-4">
-            なんと言っていいか、書いていいかわからない。そんな時、あなたの気持ちを代筆します。
+          執筆欲にまみれたひつじ。なんと言っていいか、書いていいかわからない。そんな時、あなたの気持ちを代筆するよ。
           </p>
           <div className="grid gap-4">
             {diaries && diaries.filter(diary => diary.initial_display).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map(diary => diary && (

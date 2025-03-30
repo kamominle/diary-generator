@@ -354,7 +354,7 @@ ${memoText}
                 {copied ? 'コピーしました！' : 'コピー'}
               </button>
               <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(output)}`}
+                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${output}\n\n${diary.name}\n${window.location.href}`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 px-4 py-2 bg-black hover:bg-gray-800 text-white rounded-lg transition-all"
@@ -362,7 +362,7 @@ ${memoText}
                 Xに投稿
               </a>
               <a
-                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(output)}`}
+                href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(`${output} 【${diary.name}（代筆くん）】`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors"
