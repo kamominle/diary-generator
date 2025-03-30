@@ -405,6 +405,21 @@ ${memoText}
             )}
         </div>
 
+        {/* 広告の挿入位置 */}
+        <div 
+          className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
+          dangerouslySetInnerHTML={{ 
+            __html: DOMPurify.sanitize(`
+            ★TVで話題★<br>
+            24時間相談できる「ココナラ電話占い」[PR]<br>
+            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow">
+              <img border="0" width="100%" alt="" src="https://www28.a8.net/svt/bgt?aid=220521910379&wid=009&eno=01&mid=s00000012624002036000&mc=1">
+            </a>
+            <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=3NAJSM+69NH82+2PEO+C4DVL" alt="">
+            `)
+          }}
+        />
+
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
           <span className="mx-2">|</span>
