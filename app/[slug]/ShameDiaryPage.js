@@ -707,7 +707,19 @@ ${customer ? `お客様：${customer}` : ''}
               {countdown === 0 ? '代筆完了！' : `代筆中です...（残り${countdown}秒）`}
             </h3>
             <div className="my-6 flex justify-center">
-              <img 
+            <div className="my-6 flex justify-center">
+              <div
+                  dangerouslySetInnerHTML={{
+                    __html: `★在宅で高収入★<br>
+              業界大手のチャットレディグループ「アスタリスク」[PR]<br>
+              <a href="https://px.a8.net/svt/ejp?a8mat=451GBN+EF6802+4IOY+5Z6WX" rel="nofollow">
+                <img border="0" width="100%" alt="" src="https://www26.a8.net/svt/bgt?aid=250330595872&wid=011&eno=01&mid=s00000021085001004000&mc=1">
+              </a>
+              <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=451GBN+EF6802+4IOY+5Z6WX" alt="">`
+                  }}
+                />
+              </div>
+              {/* <img 
                 src="/writing.png" 
                 alt="代筆中" 
                 className="w-48 h-auto"
@@ -715,7 +727,7 @@ ${customer ? `お客様：${customer}` : ''}
                   e.target.onerror = null;
                   e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YxZjFmMSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIGZpbGw9IiM5OTkiPuS7o+etlOS4rTwvdGV4dD48L3N2Zz4=';
                 }}
-              />
+              /> */}
             </div>
             <button
               disabled={!popupClosable}

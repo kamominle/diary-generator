@@ -429,7 +429,19 @@ ${memoText}
             <p className="mb-4 text-gray-700">
               {countdown === 0 ? '代筆完了！' : `代筆中です...（残り${countdown}秒）`}
             </p>
-            <img src="/writing.png" alt="代筆中" className="mx-auto my-4" style={{ width: '200px' }} />
+            <div className="my-6 flex justify-center">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: `★TVで話題★<br>
+            24時間相談できる「ココナラ電話占い」[PR]<br>
+            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow">
+              <img border="0" width="100%" alt="" src="https://www28.a8.net/svt/bgt?aid=220521910379&wid=009&eno=01&mid=s00000012624002036000&mc=1">
+            </a>
+            <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=3NAJSM+69NH82+2PEO+C4DVL" alt="">`
+              }}
+            />
+            </div>
+            {/* <img src="/writing.png" alt="代筆中" className="mx-auto my-4" style={{ width: '200px' }} /> */}
             <button
               disabled={!popupClosable}
               className={`px-4 py-2 rounded ${popupClosable ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-600 cursor-not-allowed'}`}
