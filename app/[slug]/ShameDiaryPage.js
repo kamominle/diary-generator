@@ -692,6 +692,10 @@ ${customer ? `お客様：${customer}` : ''}
           <a href="/" className="text-blue-500 hover:text-blue-700 underline transition-colors">
             トップページに戻る
           </a>
+          <span className="mx-2">|</span>
+          <a href="/request?botId=1" className="text-blue-500 hover:text-blue-700 underline transition-colors">
+            機能改善のご要望
+          </a>
         </div>
       </div>
       

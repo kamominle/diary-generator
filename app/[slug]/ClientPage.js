@@ -407,6 +407,8 @@ ${memoText}
 
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
+          <span className="mx-2">|</span>
+          <a href={`/request?botId=${diary.id}`} className="text-blue-500 underline">機能改善のご要望</a>
         </div>
         {/* <div className="mt-4 bg-gray-100 p-4 rounded-lg">
     <h3 className="font-bold text-sm text-gray-600">検証用プロンプト：</h3>

@@ -1,12 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 
 export default function FeedbackForm() {
+    const searchParams = useSearchParams();
+    const initialBotId = searchParams.get('botId');
+    
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [botType, setBotType] = useState('');
+    const [botType, setBotType] = useState(initialBotId || '');
     const [feedback, setFeedback] = useState('');
     const [status, setStatus] = useState('');
     const [disabled, setDisabled] = useState(false);
@@ -38,8 +42,8 @@ export default function FeedbackForm() {
                     setBots(formattedBots);
                 }
             } catch (error) {
-                console.error('AIボットリストの取得に失敗しました:', error.message);
-                setError('AIボットリストの取得に失敗しました。再読み込みしてお試しください。');
+                console.error('ボットリストの取得に失敗しました:', error.message);
+                setError('ボットリストの取得に失敗しました。再読み込みしてお試しください。');
             } finally {
                 setLoading(false);
             }
@@ -64,7 +68,7 @@ export default function FeedbackForm() {
         const selectedBotName = bots.find(bot => bot.id.toString() === botType)?.name || '';
         
         // メッセージの形式を整える
-        const formattedMessage = `【対象のAIボット】\n${selectedBotName}\n\n【ご要望・ご意見】\n${feedback}`;
+        const formattedMessage = `【対象の代筆くん】\n${selectedBotName}\n\n【ご要望・ご意見】\n${feedback}`;
 
         const res = await fetch('/api/contact', {
             method: 'POST',
@@ -147,7 +151,7 @@ export default function FeedbackForm() {
 
                             <div className="mb-4">
                                 <label className="block text-gray-700" htmlFor="botType">
-                                    対象のAIボット {!isConfirming && <span className="text-red-500 text-sm">※必須</span>}
+                                    対象の代筆くん {!isConfirming && <span className="text-red-500 text-sm">※必須</span>}
                                 </label>
                                 {isConfirming ? (
                                     <p className="mt-1 text-gray-800 whitespace-pre-wrap">
