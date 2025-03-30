@@ -412,7 +412,7 @@ ${memoText}
             __html: DOMPurify.sanitize(`
             ★TVで話題★<br>
             24時間相談できる「ココナラ電話占い」[PR]<br>
-            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow">
+            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow" target="_blank">
               <img border="0" width="100%" alt="" src="https://www28.a8.net/svt/bgt?aid=220521910379&wid=009&eno=01&mid=s00000012624002036000&mc=1">
             </a>
             <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=3NAJSM+69NH82+2PEO+C4DVL" alt="">
@@ -449,7 +449,7 @@ ${memoText}
               dangerouslySetInnerHTML={{
                 __html: `★TVで話題★<br>
             24時間相談できる「ココナラ電話占い」[PR]<br>
-            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow">
+            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow" target="_blank">
               <img border="0" width="100%" alt="" src="https://www28.a8.net/svt/bgt?aid=220521910379&wid=009&eno=01&mid=s00000012624002036000&mc=1">
             </a>
             <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=3NAJSM+69NH82+2PEO+C4DVL" alt="">`
