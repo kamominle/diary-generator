@@ -727,7 +727,8 @@ ${customer ? `お客様：${customer}` : ''}
               <a href="https://px.a8.net/svt/ejp?a8mat=451GBN+EF6802+4IOY+5Z6WX" rel="nofollow" target="_blank">
                 <img border="0" width="100%" alt="" src="https://www26.a8.net/svt/bgt?aid=250330595872&wid=011&eno=01&mid=s00000021085001004000&mc=1">
               </a>
-              <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=451GBN+EF6802+4IOY+5Z6WX" alt="">`
+              <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=451GBN+EF6802+4IOY+5Z6WX" alt="">
+              ※別ウィンドウで開きます`
                   }}
                 />
               {/* <img 
