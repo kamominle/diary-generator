@@ -407,7 +407,7 @@ ${memoText}
 
         {/* 広告の挿入位置 */}
         <div 
-          className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
+          className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
           dangerouslySetInnerHTML={{ 
             __html: DOMPurify.sanitize(`
             ★TVで話題★<br>
@@ -441,9 +441,9 @@ ${memoText}
       {showPopup && (
         <div className="fixed inset-0 bg-white/80 bg-opacity-70 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <p className="mb-4 text-gray-700">
+            <h3 className="text-xl font-bold text-gray-800 mb-4">
               {countdown === 0 ? '代筆完了！' : `代筆中です...（残り${countdown}秒）`}
-            </p>
+            </h3>
             <div className="my-6 flex justify-center">
             <div
               dangerouslySetInnerHTML={{
