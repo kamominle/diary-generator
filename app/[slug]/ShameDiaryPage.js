@@ -211,6 +211,7 @@ export default function IndividualDiaryPage() {
 ルール：写メ日記という風俗の女性キャストがお客様向けに発信する文章を生成
 改行を用いて読みやすく
 300文字以内（日本語換算）でまとめる。
+指定がない場合、天気や季節、気温の話題は避ける。
 スタイル：${currentStyle.prompt_word}
 絵文字・顔文字の量：${emojiAmount}
 
@@ -231,7 +232,7 @@ ${diaryType === '出勤情報' ? [
 ].filter(Boolean).join('\n') : ''}
 
 ${sourceName ? `源氏名：${sourceName}` : ''}
-${customer ? `お客様：${customer}` : ''}
+${customer ? `お客様名：${customer}` : ''}
 
 キーワード：${diaryType === 'フリー日記' ? keyword : diaryType}
 `;
@@ -369,7 +370,7 @@ ${customer ? `お客様：${customer}` : ''}
                 value={sourceName}
                 onChange={(e) => setSourceName(e.target.value)}
                 className="w-full p-3 border rounded-lg text-gray-600 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 transition-all"
-                placeholder="源氏名を入力"
+                placeholder="例：あい"
               />
             </div>
             <div>
@@ -378,7 +379,7 @@ ${customer ? `お客様：${customer}` : ''}
                 value={customer}
                 onChange={(e) => setCustomer(e.target.value)}
                 className="w-full p-3 border rounded-lg text-gray-600 focus:ring-2 focus:ring-blue-300 focus:border-blue-500 transition-all"
-                placeholder="お客様を入力"
+                placeholder="例：お兄さん"
               />
             </div>
           </div>
@@ -489,7 +490,7 @@ ${customer ? `お客様：${customer}` : ''}
                     value={workEndTime}
                     onChange={(e) => setWorkEndTime(e.target.value)}
                     className="w-full p-3 border rounded-lg text-gray-600 focus:ring-2 focus:ring-blue-300 focus:border-blue-500"
-                    placeholder="例: 26:00"
+                    placeholder="例: 24:00"
                   />
                 </div>
                 <div>
@@ -604,7 +605,7 @@ ${customer ? `お客様：${customer}` : ''}
         {showOutput && (
           <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-800">生成結果</h2>
+              <h2 className="text-xl font-bold text-gray-800">代筆結果</h2>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-medium">
                 {diaryType}
               </span>
@@ -621,11 +622,11 @@ ${customer ? `お客様：${customer}` : ''}
             </div>
             
             {/* Display generation time if available */}
-            {generationDuration && (
+            {/* {generationDuration && (
               <div className="mt-2 text-xs text-gray-500 text-right">
                 生成時間: {(generationDuration / 1000).toFixed(2)}秒
               </div>
-            )}
+            )} */}
             
             {/* Actions for output */}
             <div className="mt-6">
