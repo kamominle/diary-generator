@@ -344,9 +344,31 @@ ${customer ? `お客様名：${customer}` : ''}
       <div className="max-w-xl mx-auto">
         {/* Title and header */}
         <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6">
+        <div className="flex flex-wrap gap-2 mb-4">
+          <button
+            onClick={() => navigator.clipboard.writeText(`${window.location.href}`)}
+            className="text-[10px] flex items-center gap-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-all"
+            >
+            <Copy size={16} />
+          </button>
+          <a
+            href={`https://twitter.com/intent/tweet?text=【写メ日記代筆くん】写メ日記の作成をお手伝いします🐏&url=https://ai-sheep.com/shame-diary`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-lg transition-all"
+          >
+            X
+          </a>
+          <a
+            href={`https://social-plugins.line.me/lineit/share?url=https://ai-sheep.com/shame-diary&text=【写メ日記代筆くん】写メ日記の作成をお手伝いします🐏`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[10px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all"
+          >LINE</a>
+        </div>
           <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">写メ日記 代行・代筆くん</h1>
           <p className="text-center text-gray-600 mb-2">
-            写メ日記の作成をお手伝いするツールです
+            写メ日記の作成をお手伝いします🐏
           </p>
         </div>
         
@@ -362,7 +384,7 @@ ${customer ? `お客様名：${customer}` : ''}
 
         {/* Profile section */}
         <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-bold text-gray-800 mb-4">プロフィール</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">基本情報</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">源氏名</label>
