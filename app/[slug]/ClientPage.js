@@ -7,6 +7,57 @@ import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-fea
 import DOMPurify from 'dompurify';
 import { ThumbsUp, ThumbsDown } from 'react-feather';
 import ShameDiaryPage from './ShameDiaryPage';
+import { useRef } from 'react';
+
+// DMMの広告をiframeで表示するコンポーネント
+const DMMAdIframe = () => {
+  const iframeRef = useRef(null);
+  
+  useEffect(() => {
+    if (iframeRef.current) {
+      const iframe = iframeRef.current;
+      
+      // iframeがロードされたら内容を書き込む
+      iframe.onload = () => {
+        try {
+          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+          
+          // iframeのdocumentに直接書き込む
+          iframeDoc.open();
+          iframeDoc.write(`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <style>
+                  body { margin: 0; padding: 0; overflow: hidden; }
+                </style>
+              </head>
+              <body>
+                <ins class="dmm-widget-placement" data-id="b393d30172164e3b7e352258c9f1afd8" style="background:transparent"></ins>
+                <script src="https://widget-view.dmm.com/js/placement.js" class="dmm-widget-scripts" data-id="b393d30172164e3b7e352258c9f1afd8"></script>
+              </body>
+            </html>
+          `);
+          iframeDoc.close();
+        } catch (e) {
+          console.error('iframeエラー:', e);
+        }
+      };
+    }
+  }, []);
+  
+  return (
+    <iframe 
+      ref={iframeRef}
+      title="DMMウィジェット" 
+      className="mt-6 w-full border border-gray-200 rounded-lg"
+      style={{ height: '250px', border: 'none' }}
+      sandbox="allow-scripts allow-same-origin"
+    ></iframe>
+  );
+};
 
 export default function ClientPage() {
   const params = useParams();
@@ -69,17 +120,6 @@ export default function ClientPage() {
 
     fetchDiaryData();
   }, [slug]);
-
-  useEffect(() => {
-    const existingScript = document.querySelector('.dmm-widget-scripts');
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://widget-view.dmm.com/js/placement.js';
-      script.className = 'dmm-widget-scripts';
-      script.dataset.id = 'b393d30172164e3b7e352258c9f1afd8';
-      document.body.appendChild(script);
-    }
-  }, []);
 
 const generateDiary = async () => {
   setFormError('');
@@ -416,13 +456,9 @@ ${memoText}
             )}
         </div>
 
-{/* 広告の挿入位置 */}
-<div 
-  className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
-  dangerouslySetInnerHTML={{
-    __html: `<ins class="dmm-widget-placement" data-id="b393d30172164e3b7e352258c9f1afd8" style="background:transparent"></ins><script src="https://widget-view.dmm.com/js/placement.js" class="dmm-widget-scripts" data-id="b393d30172164e3b7e352258c9f1afd8"></script>`
-  }}
-/>
+        {/* 広告の挿入位置 */}
+        <DMMAdIframe />
+
 
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
