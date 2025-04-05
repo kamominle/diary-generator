@@ -423,7 +423,7 @@ ${memoText}
         </div>
 
         {/* 広告の挿入位置 */}
-        <div className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center">
+        <div className="mt-6 p-4 rounded-lg text-center flex flex-col items-center justify-center">
           <AdComponent adHtml={diary.ads || ''} />
         </div>
 

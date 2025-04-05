@@ -754,10 +754,8 @@ ${customer ? `お客様名：${customer}` : ''}
           </div>
         )}
         {/* 広告の挿入位置 */}
-        <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6">
-        <div className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center">
+        <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6 text-center flex flex-col items-center justify-center">
           <AdComponent adHtml={adHtml || ''} />
-        </div>
         </div>        
         {/* Footer */}
         <div className="w-full text-center mt-4 mb-8">
