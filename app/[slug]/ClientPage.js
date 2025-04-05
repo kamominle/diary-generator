@@ -70,6 +70,17 @@ export default function ClientPage() {
     fetchDiaryData();
   }, [slug]);
 
+  useEffect(() => {
+    const existingScript = document.querySelector('.dmm-widget-scripts');
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://widget-view.dmm.com/js/placement.js';
+      script.className = 'dmm-widget-scripts';
+      script.dataset.id = 'b393d30172164e3b7e352258c9f1afd8';
+      document.body.appendChild(script);
+    }
+  }, []);
+
 const generateDiary = async () => {
   setFormError('');
 
