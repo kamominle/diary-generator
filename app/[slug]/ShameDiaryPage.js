@@ -1,17 +1,35 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Copy, RefreshCw, Loader, ChevronDown, ChevronUp, X } from 'react-feather';
-import DOMPurify from 'dompurify';
-import { ThumbsUp, ThumbsDown } from 'react-feather';
-// Supabaseクライアントをインポート
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
+import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-feather';
+import { ThumbsUp, ThumbsDown } from 'react-feather';
+import ShameDiaryPage from './ShameDiaryPage';
+import DOMPurify from 'isomorphic-dompurify';
+import { AdComponent } from './AdComponent';
+
+if (typeof window !== 'undefined') {
+  DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+    if (node.tagName === 'A' && 'target' in node) {
+      node.setAttribute('target', '_blank');
+      node.setAttribute('rel', 'noopener noreferrer');
+    }
+  });
+}
+
+// 許可するタグと属性を拡張
+const purifyConfig = {
+  ADD_TAGS: ['script', 'ins'],
+  ADD_ATTR: ['class', 'data-id', 'style', 'src'],
+  ALLOW_UNKNOWN_PROTOCOLS: true,
+};
 
 export default function IndividualDiaryPage() {
   // Core state
   const [sourceName, setSourceName] = useState('');
   const [customer, setCustomer] = useState('');
-  const [diaryType, setDiaryType] = useState('');
+  const [diaryType, setDiaryType] = useState('出勤情報'); // デフォルトで出勤情報を選択
   const [output, setOutput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -19,7 +37,8 @@ export default function IndividualDiaryPage() {
   const [formError, setFormError] = useState('');
   const [feedbackSent, setFeedbackSent] = useState(false);
   const [emojiAmount, setEmojiAmount] = useState('ふつう'); // 絵文字・顔文字の量用の状態変数を追加
-  
+  const [adHtml, setAdHtml] = useState('');
+
   // Diary type specific fields
   const [workStartTime, setWorkStartTime] = useState('');
   const [workEndTime, setWorkEndTime] = useState('');
@@ -103,6 +122,32 @@ export default function IndividualDiaryPage() {
     
     // フリー日記
     setKeyword(cleanStorageValue(localStorage.getItem('keyword')));
+  }, []);
+
+  useEffect(() => {
+    async function fetchDiaryAds() {
+      try {
+        // diariesテーブルからid=1のレコードを取得
+        const { data, error } = await supabase
+          .from('diaries')
+          .select('ads')
+          .eq('id', 1)
+          .single();
+          
+        if (error) {
+          console.error('広告データの取得エラー:', error);
+          return;
+        }
+        
+        if (data) {
+          setAdHtml(data.ads || '');
+        }
+      } catch (error) {
+        console.error('広告データの取得エラー:', error);
+      }
+    }
+    
+    fetchDiaryAds();
   }, []);
 
   // 源氏名が変更されたらlocalStorageに保存
@@ -710,18 +755,9 @@ ${customer ? `お客様名：${customer}` : ''}
         )}
         {/* 広告の挿入位置 */}
         <div className="w-full bg-white rounded-xl shadow-lg p-6 mb-6">
-        <div 
-            className="p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
-            dangerouslySetInnerHTML={{ 
-              __html: `
-                ★在宅で高収入★<br>
-                業界大手のチャットレディグループ「アスタリスク」[PR]<br>
-                <a href="https://px.a8.net/svt/ejp?a8mat=451GBN+EF6802+4IOY+5Z6WX" rel="nofollow" target="_blank">
-                <img border="0" width="100%" alt="" src="https://www26.a8.net/svt/bgt?aid=250330595872&wid=011&eno=01&mid=s00000021085001004000&mc=1"></a>
-                <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=451GBN+EF6802+4IOY+5Z6WX" alt="" />
-              `
-            }}
-          />
+        <div className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center">
+          <AdComponent adHtml={adHtml || ''} />
+        </div>
         </div>        
         {/* Footer */}
         <div className="w-full text-center mt-4 mb-8">
@@ -743,17 +779,9 @@ ${customer ? `お客様名：${customer}` : ''}
               {countdown === 0 ? '代筆完了！' : `代筆中です...（残り${countdown}秒）`}
             </h3>
             <div className="my-6 flex justify-center">
-              <div
-                  dangerouslySetInnerHTML={{
-                    __html: `★在宅で高収入★<br>
-              業界大手のチャットレディグループ「アスタリスク」[PR]<br>
-              <a href="https://px.a8.net/svt/ejp?a8mat=451GBN+EF6802+4IOY+5Z6WX" rel="nofollow" target="_blank">
-                <img border="0" width="100%" alt="" src="https://www26.a8.net/svt/bgt?aid=250330595872&wid=011&eno=01&mid=s00000021085001004000&mc=1">
-              </a>
-              <img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=451GBN+EF6802+4IOY+5Z6WX" alt="">
-              ※別ウィンドウで開きます`
-                  }}
-                />
+            <div className="my-6 flex justify-center">
+              <AdComponent adHtml={adHtml || ''} />
+            </div>
               {/* <img 
                 src="/writing.png" 
                 alt="代筆中" 

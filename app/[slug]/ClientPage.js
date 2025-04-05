@@ -7,6 +7,7 @@ import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-fea
 import { ThumbsUp, ThumbsDown } from 'react-feather';
 import ShameDiaryPage from './ShameDiaryPage';
 import DOMPurify from 'isomorphic-dompurify';
+import { AdComponent } from './AdComponent';
 
 if (typeof window !== 'undefined') {
   DOMPurify.addHook('afterSanitizeAttributes', function (node) {
@@ -422,12 +423,9 @@ ${memoText}
         </div>
 
         {/* 広告の挿入位置 */}
-        <div 
-          className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(diary.ads || '', purifyConfig),
-          }}
-        />
+        <div className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center">
+          <AdComponent adHtml={diary.ads || ''} />
+        </div>
 
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
@@ -454,9 +452,7 @@ ${memoText}
               {countdown === 0 ? '代筆完了！' : `代筆中です...（残り${countdown}秒）`}
             </h3>
             <div className="my-6 flex justify-center">
-            <div
-              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(diary.ads || '', purifyConfig) }}
-            />
+              <AdComponent adHtml={diary.ads || ''} />
             </div>
             {/* <img src="/writing.png" alt="代筆中" className="mx-auto my-4" style={{ width: '200px' }} /> */}
             <button
