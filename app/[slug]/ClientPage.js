@@ -4,59 +4,24 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/utils/supabase';
 import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-feather';
-import DOMPurify from 'dompurify';
 import { ThumbsUp, ThumbsDown } from 'react-feather';
 import ShameDiaryPage from './ShameDiaryPage';
-import { useRef } from 'react';
+import DOMPurify from 'isomorphic-dompurify';
 
-// DMMの広告をiframeで表示するコンポーネント
-const DMMAdIframe = () => {
-  const iframeRef = useRef(null);
-  
-  useEffect(() => {
-    if (iframeRef.current) {
-      const iframe = iframeRef.current;
-      
-      // iframeがロードされたら内容を書き込む
-      iframe.onload = () => {
-        try {
-          const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-          
-          // iframeのdocumentに直接書き込む
-          iframeDoc.open();
-          iframeDoc.write(`
-            <!DOCTYPE html>
-            <html>
-              <head>
-                <meta charset="utf-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <style>
-                  body { margin: 0; padding: 0; overflow: hidden; }
-                </style>
-              </head>
-              <body>
-                <ins class="dmm-widget-placement" data-id="b393d30172164e3b7e352258c9f1afd8" style="background:transparent"></ins>
-                <script src="https://widget-view.dmm.com/js/placement.js" class="dmm-widget-scripts" data-id="b393d30172164e3b7e352258c9f1afd8"></script>
-              </body>
-            </html>
-          `);
-          iframeDoc.close();
-        } catch (e) {
-          console.error('iframeエラー:', e);
-        }
-      };
+if (typeof window !== 'undefined') {
+  DOMPurify.addHook('afterSanitizeAttributes', function (node) {
+    if (node.tagName === 'A' && 'target' in node) {
+      node.setAttribute('target', '_blank');
+      node.setAttribute('rel', 'noopener noreferrer');
     }
-  }, []);
-  
-  return (
-    <iframe 
-      ref={iframeRef}
-      title="DMMウィジェット" 
-      className="mt-6 w-full border border-gray-200 rounded-lg"
-      style={{ height: '250px', border: 'none' }}
-      sandbox="allow-scripts allow-same-origin"
-    ></iframe>
-  );
+  });
+}
+
+// 許可するタグと属性を拡張
+const purifyConfig = {
+  ADD_TAGS: ['script', 'ins'],
+  ADD_ATTR: ['class', 'data-id', 'style', 'src'],
+  ALLOW_UNKNOWN_PROTOCOLS: true,
 };
 
 export default function ClientPage() {
@@ -177,7 +142,7 @@ ${memoText}
     const data = await res.json();
     console.log('API Response:', data);
     
-    setOutput(DOMPurify.sanitize(data.text));
+    setOutput(DOMPurify.sanitize(data.text, purifyConfig));
     
     if (data.moderation_flagged) {
       setShowPopup(false);
@@ -457,8 +422,12 @@ ${memoText}
         </div>
 
         {/* 広告の挿入位置 */}
-        <DMMAdIframe />
-
+        <div 
+          className="mt-6 p-4 rounded-lg border border-gray-200 text-center flex flex-col items-center justify-center"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(diary.ads || '', purifyConfig),
+          }}
+        />
 
         <div className="w-full text-center mt-4 clear-both">
           <a href="/" className="text-blue-500 underline">トップページに戻る</a>
@@ -472,7 +441,7 @@ ${memoText}
       {diary.column && (
 <div
   className="column mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-gray-700"
-  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(diary.column) }}
+  dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(diary.column, purifyConfig) }}
 />
 )}
 
@@ -486,15 +455,7 @@ ${memoText}
             </h3>
             <div className="my-6 flex justify-center">
             <div
-              dangerouslySetInnerHTML={{
-                __html: `★TVで話題★<br>
-            24時間相談できる「ココナラ電話占い」[PR]<br>
-            <a href="https://px.a8.net/svt/ejp?a8mat=3NAJSM+69NH82+2PEO+C4DVL" rel="nofollow" target="_blank">
-              <img border="0" width="100%" alt="" src="https://www28.a8.net/svt/bgt?aid=220521910379&wid=009&eno=01&mid=s00000012624002036000&mc=1">
-            </a>
-            <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=3NAJSM+69NH82+2PEO+C4DVL" alt="">
-            ※別ウィンドウで開きます`
-              }}
+              dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(diary.ads || '', purifyConfig) }}
             />
             </div>
             {/* <img src="/writing.png" alt="代筆中" className="mx-auto my-4" style={{ width: '200px' }} /> */}
