@@ -210,7 +210,7 @@ export default function IndividualDiaryPage() {
     const basePrompt = `
 ルール：写メ日記という風俗の女性キャストがお客様向けに発信する文章を生成
 改行を用いて読みやすく
-300文字以内（日本語換算）でまとめる。
+200文字以内（日本語換算）でまとめる。
 指定がない場合、天気や季節、気温の話題は避ける。
 スタイル：${currentStyle.prompt_word}
 絵文字・顔文字の量：${emojiAmount}
