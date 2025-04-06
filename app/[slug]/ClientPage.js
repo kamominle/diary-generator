@@ -242,9 +242,16 @@ ${memoText}
         </div>
 
         <div className="mb-6">
-          <div className="flex items-center gap-2 mb-2">
-            <h1 className="text-2xl font-bold text-gray-800">{diary.name} 代筆くん</h1>
-          </div>
+          {diary.image && (
+            <div className="mb-4">
+              <img
+                src={diary.image}
+                alt={diary.name}
+                className="w-full h-auto rounded-lg object-cover"
+              />
+            </div>
+          )}
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">{diary.name} 代筆くん</h1>
           {diary.description && (
             <p className="text-sm text-gray-600 m-4">
               {diary.description}
