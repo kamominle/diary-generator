@@ -417,6 +417,7 @@ ${customer ? `お客様名：${customer}` : ''}
             写メ日記の作成をお手伝いします🐏
           </p>
         </div>
+        
         {/* アップデート情報 - 修正: min-h-screenの削除 */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">アップデート情報</h2>
