@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/xai": "^1.2.13",
     "@supabase/supabase-js": "^2.49.1",
     "dompurify": "^3.2.4",
     "isomorphic-dompurify": "^2.23.0",

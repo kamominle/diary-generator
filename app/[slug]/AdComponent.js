@@ -1,4 +1,3 @@
-// AdComponent.js
 import { useEffect, useRef } from 'react';
 import DOMPurify from 'isomorphic-dompurify';
 
@@ -38,5 +37,5 @@ export function AdComponent({ adHtml }) {
     });
   }, [adHtml]);
   
-  return <div ref={adContainerRef} />;
+  return <div ref={adContainerRef} style={{ minWidth: '300px', minHeight: '250px' }} />;
 }
