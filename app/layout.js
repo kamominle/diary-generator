@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
 import { Noto_Sans_JP, Roboto_Mono } from "next/font/google";
 import Script from 'next/script';
 import "./globals.css";
@@ -12,11 +13,54 @@ const jsonLd = {
   "@context": "http://schema.org",
   "@type": "WebSite",
   "name": "AI代筆くん",
-  "url": "https://diary-generator.vercel.app/"
+  "url": "https://ai-sheep.com/",
+  "description": "AIが日記や文章を自動生成するサービス。あなたの代わりに文章を作成します。",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://ai-sheep.com/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
 };
 
 export const metadata = {
   title: '代筆くん 自動手記ひつじサービス',
+  description: 'AIが日記や文章を自動生成するサービス。あなたの代わりに文章を作成します。',
+  keywords: '代筆, AI, 日記, 自動生成, 文章作成',
+  metadataBase: new URL('https://ai-sheep.com/'),
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: '代筆くん 自動手記ひつじサービス',
+    description: 'AIが日記や文章を自動生成するサービス。あなたの代わりに文章を作成します。',
+    url: 'https://ai-sheep.com/',
+    siteName: 'AI代筆くん',
+    locale: 'ja_JP',
+    type: 'website',
+    images: [
+      {
+        url: 'https://ai-sheep.com/ogp.png', // OGP画像のパスを設定
+        width: 1200,
+        height: 630,
+        alt: '代筆くん',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '代筆くん 自動手記ひつじサービス',
+    description: 'AIが日記や文章を自動生成するサービス。あなたの代わりに文章を作成します。',
+    images: ['https://ai-sheep.com/ogp.png'], // Twitter Card用画像
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {
