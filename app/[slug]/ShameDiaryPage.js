@@ -61,7 +61,7 @@ export default function IndividualDiaryPage() {
   // For popup during generation
   const [showPopup, setShowPopup] = useState(false);
   const [popupClosable, setPopupClosable] = useState(false);
-  const [countdown, setCountdown] = useState(10);
+  const [countdown, setCountdown] = useState(5);
   
   // For logs
   const [generationStartTime, setGenerationStartTime] = useState(null);
@@ -230,7 +230,7 @@ export default function IndividualDiaryPage() {
     setLoading(true);
     setShowPopup(true);
     setPopupClosable(false);
-    setCountdown(10);
+    setCountdown(5);
     setShowOutput(false);
     
     // 開始時間を記録
@@ -257,7 +257,7 @@ export default function IndividualDiaryPage() {
 改行を用いて読みやすく
 500文字以内（日本語換算）でまとめる。
 文字数など日記文章以外の出力は無し。
-指定がない場合、天気や季節、気温の話題は避ける。
+指定がない場合、天気や季節、気温の話題は入れない。
 スタイル：${currentStyle.prompt_word}
 Unicode絵文字・顔文字の量：${emojiAmount}
 
@@ -287,7 +287,7 @@ ${customer ? `お客様名：${customer}` : ''}
       // Ensure we wait for the full countdown even if API is fast
       const minDelay = new Promise(resolve => setTimeout(resolve, 3000));
       
-      const fetchPromise = fetch('/api/generate/grok', {  // ←エンドポイントを変更
+      const fetchPromise = fetch('/api/generate/', {  // ←エンドポイントを変更
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -419,12 +419,12 @@ ${customer ? `お客様名：${customer}` : ''}
         </div>
         
         {/* アップデート情報 - 修正: min-h-screenの削除 */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+        {/* <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
           <h2 className="text-xl font-bold text-gray-800 mb-4">アップデート情報</h2>
           <p className="text-center text-gray-600 mb-2">
           2025/4/20 - Hなワードの許容度がアップしました。
           </p>        
-        </div>        
+        </div>         */}
         {/* Error display */}
         {error && (
           <div className="w-full bg-red-50 rounded-xl shadow-lg p-6 mb-6 text-red-500 flex items-center justify-between">
