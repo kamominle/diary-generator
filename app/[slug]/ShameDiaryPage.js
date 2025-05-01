@@ -412,9 +412,9 @@ ${customer ? `お客様名：${customer}` : ''}
             className="text-[10px] px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-all"
           >LINE</a>
         </div>
-          <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">写メ日記 代行・代筆くん</h1>
+          <h1 className="text-2xl font-bold text-center text-gray-800 mb-4">写メ日記メーカー【コピペOK】</h1>
           <p className="text-center text-gray-600 mb-2">
-            写メ日記の作成をお手伝いします🐏
+            写メ日記の作成をお手伝いします🐏 写メ日記のネタに困ったとき、忙しくて言葉が出ないとき、テンプレートが欲しいとき。かんたんな入力で心のこもった写メ日記を代筆♪
           </p>
         </div>
         
