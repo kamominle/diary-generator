@@ -6,6 +6,7 @@ import { supabase } from '@/utils/supabase';
 import { Star, Copy, RefreshCw, Loader, ChevronDown, ChevronUp } from 'react-feather';
 import { ThumbsUp, ThumbsDown } from 'react-feather';
 import ShameDiaryPage from './ShameDiaryPage';
+import ShameDiaryPageDemoAyaka from './ShameDiaryPageDemoAyaka';
 import DOMPurify from 'isomorphic-dompurify';
 import { AdComponent } from './AdComponent';
 
@@ -203,7 +204,9 @@ ${memoText}
   if (slug === 'shame-diary') {
     return <ShameDiaryPage />;
   }
-
+  if (slug === 'shame-diary-demo-ayaka') {
+    return <ShameDiaryPageDemoAyaka />;
+  }
   if (!diary) return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 p-4 flex flex-col items-center justify-center">
       <div className="animate-spin mb-4">
