@@ -4,16 +4,20 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
 module.exports = {
-  siteUrl: 'https://diary-generator.vercel.app',
+  siteUrl: 'https://ai-sheep.com',
   generateRobotsTxt: true,
   changefreq: 'daily',
   priority: 0.7,
   generateIndexSitemap: false,
 
   additionalPaths: async () => {
-    const { data } = await supabase.from('diaries').select('slug');
+    const { data } = await supabase
+      .from('diaries')
+      .select('slug')
+      .eq('initial_display', true);  // 公開ページのみ取得
+
     return data.map(diary => ({
-      loc: `https://diary-generator.vercel.app/${diary.slug}`,
+      loc: `https://ai-sheep.com/${diary.slug}`,
       changefreq: 'daily',
       priority: 0.7,
     }));
